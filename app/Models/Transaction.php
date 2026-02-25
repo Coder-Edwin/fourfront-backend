@@ -17,7 +17,7 @@ class Transaction extends Model
     ];
 
     /**
-     * A transaction belongs to one wallet.
+     * Each transaction belongs to one wallet.
      */
     public function wallet()
     {

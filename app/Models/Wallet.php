@@ -16,7 +16,7 @@ class Wallet extends Model
     ];
 
     /**
-     * A wallet belongs to one user.
+     * Each wallet belongs to one user.
      */
     public function user()
     {
@@ -24,7 +24,7 @@ class Wallet extends Model
     }
 
     /**
-     * A wallet has many transactions.
+     * A wallet can have many transactions.
      */
     public function transactions()
     {
@@ -32,10 +32,11 @@ class Wallet extends Model
     }
 
     /**
-     * Calculate this wallet's balance.
+     * Calculate this wallet's balance dynamically.
      * Income adds to balance, expense subtracts from balance.
+     * This is accessed as $wallet->balance (like a property).
      */
-    public function balance(): float
+    public function getBalanceAttribute()
     {
         $income  = $this->transactions()
                         ->where('type', 'income')
@@ -45,6 +46,6 @@ class Wallet extends Model
                         ->where('type', 'expense')
                         ->sum('amount');
 
-        return (float) ($income - $expense);
+        return $income - $expense;
     }
 }

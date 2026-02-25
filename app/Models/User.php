@@ -8,7 +8,7 @@ class User extends Model
 {
     /**
      * The attributes that are mass assignable.
-     * These fields can be filled via User::create([...])
+     * These fields can be filled using User::create([...])
      */
     protected $fillable = [
         'name',
@@ -26,13 +26,13 @@ class User extends Model
     }
 
     /**
-     * Calculate the total balance across ALL of the user's wallets.
-     * Used when viewing a user's profile.
+     * Calculate the user's total balance across ALL their wallets.
+     * Used when viewing the user profile.
      */
-    public function totalBalance(): float
+    public function getTotalBalanceAttribute()
     {
         return $this->wallets->sum(function ($wallet) {
-            return $wallet->balance();
+            return $wallet->balance;
         });
     }
 }
